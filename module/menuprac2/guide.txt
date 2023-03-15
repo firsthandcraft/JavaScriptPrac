@@ -1,0 +1,29 @@
+실습 설명
+메뉴 정하기 프로그램을 만들고 싶은 영준이는 메뉴 추가 기능을 마무리하고 추가한 메뉴를 삭제하는 기능도 개발했습니다.
+메뉴를 삭제하는 기능은 delete.js 파일에 새롭게 작성했는데요. 함수에 좀 더 구체적인 의미를 부여하고 싶어서 deleteMenuByIndex라고 이름을 지어줬지만, index.js에서 사용할 때는 조금 더 간결하게 deleteMenu라는 이름으로 사용하고 싶습니다.
+
+하루빨리 메뉴 정하기 프로그램을 만들고 싶은 영준이를 위해 delete.js에서 export 한 deleteMenuByIndex 를 index.js에서 deleteMenu 라는 이름으로 import해주세요.
+
+
+
+
+해설
+모듈 문법을 활용할 때 import할 변수나 함수 이름을 조금 더 간결한 이름으로 바꾸거나, 혹은 더 구체적으로 바꾸고 싶을 수도 있습니다. 그럴 때 import 키워드를 통해 모듈을 불러올 때 as 키워드를 활용하면 import하는 대상들의 이름을 변경할 수 있는데요.
+delete.js에서 export 한 deleteMenuByIndex 를 'index.js'에서 deleteMenu 라는 이름으로 import하려면 다음과 같이 코드를 작성하면 됩니다.
+
+모범 답안
+index.js
+
+import { addMenu } from './add.js';
+// 여기에 코드를 작성하세요
+import { deleteMenuByIndex as deleteMenu } from './delete.js';
+
+const data = [];
+const addBtn = document.querySelector('.add-btn');
+const addInput = document.querySelector('.add-input');
+const list = document.querySelector('.list');
+
+addBtn.addEventListener('click', () => addMenu(data));
+addInput.addEventListener('keypress', (e) => e.code === 'Enter' && addMenu(data));
+list.addEventListener('click', ({ target }) => target.tagName === 'BUTTON' && deleteMenu(data, target.dataset.index));
+이런 상황뿐만 아니라 이름을 바꿔서 import하면 여러 파일에서 불러오는 대상들의 이름이 중복되는 문제를 해결할 수도 있다는 점도 꼭 기억해 주세요!
