@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cookies6</title>
+    <link rel="stylesheet" href="css/cookies.css">
+    <link rel="stylesheet" href="css/cookie.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- <script src="js/setting.js"></script> -->
+</head>
+<body>
+    <!-- Hero -->
+    <section class="et-hero-tabs">
+      <h1>cookie</h1>
+      <h2></h2>
+    </section>
+  <!-- cookies -->
+    <div class="popupWrap">
+        <div class="popupHeader">
+            <svg width="20" height="20" viewBox="0 0 473 407" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="57.166" cy="57.166" r="57.166" transform="matrix(1 0 0 -1 357.969 260.229)" fill="#007BC3"/>
+                <path d="M81.967 264.527V141.616ZM81.967 264.527L42.8657 279.894C1.04691 279.894 0.0390625 245.499 0.0390625 203.071C0.0390625 160.643 1.04691 126.248 42.8657 126.248L81.967 141.616" fill="#007BC3"/>
+                <path d="M81.75 141.528L386.043 16.9425C405.781 8.86141 427.41 23.3778 427.41 44.7056V361.436C427.41 382.763 405.781 397.28 386.044 389.199L81.75 264.621V141.528Z" fill="#29AAF3"/>
+            </svg>
+            <p class="popupClose">
+                <svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 42L24.0001 24.0001ZM42 6L24.0001 24.0001ZM24.0001 24.0001L6 6ZM24.0001 24.0001L42 42Z" fill="white"/>
+                    <path d="M6 42L24.0001 24.0001M24.0001 24.0001L42 6M24.0001 24.0001L6 6M24.0001 24.0001L42 42" stroke="#000" stroke-width="2.30686" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </p>
+        </div>
+        <div class="popupBody">
+            <h6>[6월 8일 5PM] i-Vet 서버점검으로 인한 사이트...</h6>
+            <p>6월 8일 부터 오후 5시 서버 점검이 있을 예정입니다.</p>
+        </div>
+        <div class="closeBtn">
+            <input type="checkbox" id="popup" name="popup">
+            <label for="popup">오늘 하루 그만보기</label>
+            <a href="">자세히 보기</a>
+        </div>
+    </div>
+</body>
+<script>
+  var myPopup = document.querySelector('.popupWrap') , checkbox = document.querySelector('#popup'),popupClose = document.querySelector('.popupClose');
+  //쿠키 이름 
+  const COOKIENAME = 'ILIKECOOKIES';
+  const COOKIEVALUE = 'SOYAMMI';
+  //쿠키 생성
+  function setCookie(name,value,day){
+    var date = new Date();//현재 날짜 지정.
+    date.setDate(date.getDate()+day);//setCookie(?,?,7);//이면 7일동안(까지) 쿠키가 만들어 진다.//오늘 부터 7일 이면 +7
+      var mycookie= '';
+      mycookie += name+'='+value +';';
+      mycookie += 'Expires=' + date.toUTCString();
+      document.cookie=mycookie;//쿠키 설정
+  }
+  //setCookie(COOKIENAME,COOKIEVALUE,1) 
+  //쿠키 확인
+  function checkCookie(name){
+    var cookies = document.cookie.split(';');
+    var visited =false;//방문거짓
+    for(var i in cookies){
+      if(cookies[i].indexOf(name) > -1){
+        visited=true;
+        //console.log('쿠키 확인- checkCookie ::: '+cookies[i]);
+        //console.log('쿠키 확인- visited ::: '+visited);
+      }
+    }
+    if(visited){
+      //재방문
+      myPopup.style.display='none';
+    } else {
+      myPopup.style.display='block';
+    }
+  };
+  checkCookie(COOKIENAME);
+
+  //쿠키삭제
+  function delCookie(name){
+    var date = new Date();
+    date.setDate(date.getDate() - 1);
+    var setCookie = '';
+    setCookie += name+'=ABC;';
+    setCookie += 'Expires=' + date.toUTCString();
+    document.cookie = setCookie;
+  }
+  document.getElementById('popup').addEventListener('click', function () {
+    console.log(document.getElementById('popup').value());
+  });
+
+  popupClose.addEventListener('click',function(){
+    if(checkbox.checked){
+      //팝업을 다시 안보겠다. 
+      setCookie(COOKIENAME,COOKIEVALUE,1);
+      myPopup.style.display='none';
+    } else{
+      //팝업을 보겠다.
+      myPopup.style.display='none';
+      delCookie(COOKIENAME);
+    }
+  });
+</script>
+</html>
