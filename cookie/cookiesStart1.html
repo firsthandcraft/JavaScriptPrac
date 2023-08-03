@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cookies1</title>
+    <link rel="stylesheet" href="css/cookies.css">
+    <link rel="stylesheet" href="css/cookie.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/setting.js"></script>
+    <script src="js/cookiesPrac.js"></script>
+</head>
+
+<body>
+    <!-- Hero -->
+  <section class="et-hero-tabs">
+    <h1>cookie</h1>
+    <div class="et-hero-tabs-container">
+      <a class="et-hero-tab" href="#tab-es6">0.쿠키란?</a>
+      <a class="et-hero-tab" href="#tab-flexbox">1.날짜알기</a>
+      <a class="et-hero-tab" href="#tab-react">2.쿠키 만들기</a>
+      <a class="et-hero-tab" href="#tab-angular">3.쿠키 삭제</a>
+      <a class="et-hero-tab" href="#tab-other">다음시간</a>
+      <span class="et-hero-tab-slider"></span>
+    </div>
+  </section>
+
+  <!-- Main -->
+  <main class="et-main">
+    <section class="et-slide" id="tab-es6">
+      <h1>쿠키란?</h1>
+      <h3>쿠키는 클라이언트, 쿠키 두군데 저장된다.</h3>
+      <p>텍스트 형식으로 저장된다. <br>
+        쿠키를 허락받는 사이트가 간혹잇는데 이건 서버에 저장하는 방식 - 오늘하루 보지 않기 방식 <br>
+        검사 -> 어플리케이션 -> 쿠키스에서 쿠키 날짜와 쿠키를 지울수도있다. <br>
+      </p>
+      <h4> 쿠키를 만들때 이름과 벨류와 expires 를 설정하는게 중요하다.</h4>
+      <p>자세한 내용은 cookiesPrac.js 참조 (쿠키딜리트와 셋을 만들어주었다.)</p>
+    </section>
+    <section class="et-slide" id="tab-flexbox">
+      <h1>step1</h1>
+      <h3>날짜 알기</h3>
+      <p>
+        let date= new Date(); <br>
+        console.log(date); <br>
+        console.log(date.getDate()); <br>
+        console.log(date.getMonth()+1);//숫자는 0부터 시작이라서 +1을 해줘야한다. <br>
+        /*  document.cookie = "Name=Value; Expires=값" <br>
+          날짜 춫출(반환) date.getDate() <br>
+          날짜 지정 date.setDate(새로운 날짜) <br>
+        */
+      </p>
+    </section>
+    <section class="et-slide" id="tab-react">
+      <h1>step2</h1>
+      <h3>쿠키 만들기 </h3>
+      <p>
+        date.setDate(date.getDate() + 7);<br>
+        console.log(date);//+7이 되었다.<br>
+        <br>
+        var setCookie='';<br>
+        //setCookie =setCookie+'CookieName=ABC';//쿠키네임 만들어줌<br>
+        setCookie += 'CookieName=ABC;';//쿠키네임과 벨류를 만들어줌<br>
+        setCookie += 'Expires =' + date.toUTCString();//GMT방식이 아닌UTC방식으로 바꿔줘야한다.<br>
+        console.log("UTC방식")<br>
+        console.log(date.toUTCString());<br>
+        document.cookie=setCookie;//쿠키 설정 ,생성<br>
+        //아래 콘솔 코드는 안보임(쿠키는 서버에 있는거라 라이브 서버에서만 보인다. openin default Browser에서는 안보임)<br>
+        console.log('document.cookie확인==='+document.cookie);//쿠키확인->document.cookie확인===CookieName=ABC<br>
+      </p>
+    </section>
+    <section class="et-slide" id="tab-angular">
+      <h1> step3</h1>
+      <h3>쿠키 삭제 - 만기 시간을 과거로 되돌린다.</h3>
+      <p>
+        function delCookie() {<br>
+            var date = new Date();<br>
+            date.setDate(date.getDate() - 1);<br>
+            var setCookie = '';<br>
+            setCookie += 'CookieName=ABC;';<br>
+            setCookie += 'Expires=' + date.toUTCString();<br>
+            document.cookie = setCookie;<br>
+        }<br>
+        <br>
+        document.getElementById('delCookie').addEventListener('click', function () {<br>
+            delCookie();<br>
+            alert("Deleted");<br>
+        });<br>
+        //쿠키를 삭제하면 다름 새로 사이트를 열때 나타난다. 기존의 쿠키사이트는 쿠키생성이 있어 따로 만들어 준다. <br>
+        //브라우저 중심으로 크롬이라는 브라우저에 쿠키가 따로 저장되어있어서 다른 사이트로 열어도 쿠키가 있다. <br>
+        //쿠키 저장한곳은 탐색기 -> 보기 -> 옵션-> 보기 -> 숨김 파일 폴더-> 보호된 운영체제 파일 숨기긱 체크 해제 . 숨김 파일 폴더및 드라이브 표시는 체크하기 <br>
+        //그러나 브라우져만 인식하는 파일이라서 다른 파일로 열어 볼수가 없다. <br>
+        // 정리 : 쿠키는 어느 사이트나 만들어두면 같은 곳에 저장이 된다. <br>
+      </p>
+    </section>
+    <section class="et-slide" id="tab-other">
+      <h1>다음시간</h1>
+      <h3>쿠키를 직접 지정하지 않고 함수로 쿠키 만들기</h3>
+      <h4>cookiesSet.html으로</h4>
+    </section>
+  </main>
+  <!-- cookies -->
+    <div class="popupWrap">
+        <div class="popupHeader">
+            <svg width="20" height="20" viewBox="0 0 473 407" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="57.166" cy="57.166" r="57.166" transform="matrix(1 0 0 -1 357.969 260.229)" fill="#007BC3"/>
+                <path d="M81.967 264.527V141.616ZM81.967 264.527L42.8657 279.894C1.04691 279.894 0.0390625 245.499 0.0390625 203.071C0.0390625 160.643 1.04691 126.248 42.8657 126.248L81.967 141.616" fill="#007BC3"/>
+                <path d="M81.75 141.528L386.043 16.9425C405.781 8.86141 427.41 23.3778 427.41 44.7056V361.436C427.41 382.763 405.781 397.28 386.044 389.199L81.75 264.621V141.528Z" fill="#29AAF3"/>
+            </svg>
+            <a href="#" onclick="feedbackClose()" class="feedbackClose">
+                <svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 42L24.0001 24.0001ZM42 6L24.0001 24.0001ZM24.0001 24.0001L6 6ZM24.0001 24.0001L42 42Z" fill="white"/>
+                    <path d="M6 42L24.0001 24.0001M24.0001 24.0001L42 6M24.0001 24.0001L6 6M24.0001 24.0001L42 42" stroke="#000" stroke-width="2.30686" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+        </div>
+        <div class="popupBody">
+            <h6>[6월 8일 5PM] i-Vet 서버점검으로 인한 사이트...</h6>
+            <p>6월 8일 부터 오후 5시 서버 점검이 있을 예정입니다.</p>
+        </div>
+        <div class="closeBtn">
+            <button id="delCookie" >오늘 하루 그만보기</button>
+            <a href="">자세히 보기</a>
+        </div>
+    </div>
+</body>
+<script>
+
+</script>
+</html>
