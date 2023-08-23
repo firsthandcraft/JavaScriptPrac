@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+<body>
+    <a href="https://developer.mozilla.org/ko/docs/Web/API/FileReader/readAsDataURL">mdn예제</a>
+    <input type="file" id="fileInput" onchange="previewFile()">
+    <img src="" height="200" alt="이미지 미리보기..." />
+    <script>
+        const fileInput = document.querySelector("#fileInput");
+        var preview = document.querySelector("img");
+        //console.log(fileInput)
+        fileInput.addEventListener("change",e => {
+            const file= fileInput.files[0];
+            //console.log("file::"+file);
+            const reader = new FileReader();
+            reader.addEventListener("load",() => {
+                console.log("reader::"+reader);
+                console.log(reader.result);
+            });
+            reader.readAsDataURL(file);
+        })
+    </script>
+</body>
+<script src="dataurl.js"></script>
+</html>
